@@ -8,6 +8,15 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/product_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textIsSelectable="true"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="102dp" />
+
+    <TextView
         android:id="@+id/scan_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,13 +24,10 @@
          />
 
     <TextView
-        android:id="@+id/scan_format"
-        android:layout_width="wrap_content"
+        android:id="@+id/quant_text"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textIsSelectable="true"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="102dp" />
+         />
 
     <Button
         android:id="@+id/scan_button"

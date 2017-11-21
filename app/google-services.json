@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "328563387029",
+    "firebase_url": "https://scanner-bdb25.firebaseio.com",
+    "project_id": "scanner-bdb25",
+    "storage_bucket": "scanner-bdb25.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328563387029:android:93739dbe9951775a",
+        "android_client_info": {
+          "package_name": "com.example.eoghan.scanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "328563387029-os3jr0vg2qct6cu26buprrqte4iv2ors.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCbT6cwNlGaXsF5eC6TbT8rMfT5rJpLds"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

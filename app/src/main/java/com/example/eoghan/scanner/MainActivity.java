@@ -7,20 +7,31 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView formatTxt, contentTxt;
+    private TextView quantityTxt, contentTxt, productTxt;
+
+
+    String scanContent;
+    //String scanFormat;
+
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        formatTxt = (TextView)findViewById(R.id.scan_format);
-        contentTxt = (TextView)findViewById(R.id.scan_content);
+        quantityTxt = (TextView)findViewById(R.id.scan_format);
+        contentTxt = (TextView)findViewById(R.id.quant_text);
+        productTxt = (TextView)findViewById(R.id.product_text);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
         public void scanNow(View View){
@@ -41,16 +52,30 @@ public class MainActivity extends AppCompatActivity {
 
         if (scanningResult != null) {
             //we have a result
-            String scanContent = scanningResult.getContents();
-            String scanFormat = scanningResult.getFormatName();
+            scanContent = scanningResult.getContents();
+            //scanFormat = scanningResult.getFormatName();
 
             // display it on screen
-            formatTxt.setText("FORMAT: " + scanFormat);
+           // formatTxt.setText("FORMAT: " + scanFormat);
             contentTxt.setText("CONTENT: " + scanContent);
-
+            
+            submitBarcode();
+            
         }else{
             Toast toast = Toast.makeText(getApplicationContext(),"No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
+        }
+    }
+
+    private void submitBarcode() {
+
+        if (scanContent != null) {
+            databaseReference.child("Code").setValue(scanContent);
+            Toast.makeText(this, scanContent + " has been added"  , Toast.LENGTH_LONG).show();
+
+        }else {
+            Toast.makeText(this, "Error, not stored: "  , Toast.LENGTH_LONG).show();
+
         }
     }
 
