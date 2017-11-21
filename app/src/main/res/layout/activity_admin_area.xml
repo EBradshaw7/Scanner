@@ -14,26 +14,33 @@
         app:srcCompat="@drawable/logo" />
 
     <TextView
-        android:id="@+id/product_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textIsSelectable="true"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="102dp" />
-
-    <TextView
         android:id="@+id/scan_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textIsSelectable="true"
-         />
+        android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/quant_text"
+    <EditText
+        android:id="@+id/productET"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-         />
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Product" />
+
+    <EditText
+        android:id="@+id/quantET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Quantity" />
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit" />
 
     <Button
         android:id="@+id/scan_button"
@@ -47,11 +54,10 @@
         tools:layout_editor_absoluteY="231dp" />
 
     <Button
-        android:id="@+id/login"
+        android:id="@+id/logout"
         android:layout_width="135dp"
         android:layout_height="wrap_content"
-        android:text="Admin Area"
         android:onClick="onClick"
-        />
+        android:text="Log Out" />
 
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,10 +17,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView quantityTxt, contentTxt, productTxt;
-
+    private Button buttonLogin;
 
     String scanContent, quantContent, nameContent;
     //String scanFormat;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         quantityTxt = (TextView)findViewById(R.id.quant_text);
         contentTxt = (TextView)findViewById(R.id.scan_content);
         productTxt = (TextView)findViewById(R.id.product_text);
+        buttonLogin = (Button) findViewById(R.id.login);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -87,8 +89,15 @@ public class MainActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (dataSnapshot.getValue() != null) {
                                 contentTxt.setText("Code: " + scanContent);
-                                quantContent = (String) dataSnapshot.child("Quantity").getValue();
+
+                                //printing location of value
+                                //DatabaseReference ref = databaseReference.child(scanContent);
+                                //quantContent = ref.child("Quantity").toString();
+
+
                                 nameContent = (String) dataSnapshot.child("Name").getValue();
+                                quantContent = (String) dataSnapshot.child("Quantity").getValue();
+
 
                                 quantityTxt.setText("Quantity " + quantContent);
                                 productTxt.setText("Name " + nameContent);
@@ -124,4 +133,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v == buttonLogin){
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
+
+        }
+    }
 }
