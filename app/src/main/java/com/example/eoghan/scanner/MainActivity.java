@@ -7,8 +7,12 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -27,11 +31,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        quantityTxt = (TextView)findViewById(R.id.scan_format);
-        contentTxt = (TextView)findViewById(R.id.quant_text);
+        quantityTxt = (TextView)findViewById(R.id.quant_text);
+        contentTxt = (TextView)findViewById(R.id.scan_content);
         productTxt = (TextView)findViewById(R.id.product_text);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        getSupportActionBar().setTitle("Retail Integration DB Management");
+
     }
 
         public void scanNow(View View){
@@ -57,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
             // display it on screen
            // formatTxt.setText("FORMAT: " + scanFormat);
-            contentTxt.setText("CONTENT: " + scanContent);
+            //contentTxt.setText("CONTENT: " + scanContent);
             
             submitBarcode();
             
@@ -69,9 +76,38 @@ public class MainActivity extends AppCompatActivity {
 
     private void submitBarcode() {
 
-        if (scanContent != null) {
-            databaseReference.child("Code").setValue(scanContent);
-            Toast.makeText(this, scanContent + " has been added"  , Toast.LENGTH_LONG).show();
+        DatabaseReference databaseReference =
+            FirebaseDatabase.getInstance().getReference().child("Products");
+
+                if (scanContent != null) {
+                    final Query refBarCode = databaseReference.orderByChild("Code").equalTo(scanContent);
+
+                    ValueEventListener barcodeListener = new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.getValue() != null) {
+                                contentTxt.setText("Code: " + scanContent);
+                            } else {
+
+                                Toast.makeText(getApplicationContext(), "No product found", Toast.LENGTH_LONG).show();
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    };
+                    refBarCode.addListenerForSingleValueEvent(barcodeListener);
+
+
+
+
+
+                    //use this for add to database
+            /*databaseReference.child("Code").setValue(scanContent);
+            Toast.makeText(this, scanContent + " has been added"  , Toast.LENGTH_LONG).show();*/
 
         }else {
             Toast.makeText(this, "Error, not stored: "  , Toast.LENGTH_LONG).show();
