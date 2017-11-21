@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView quantityTxt, contentTxt, productTxt;
 
 
-    String scanContent;
+    String scanContent, quantContent, nameContent;
     //String scanFormat;
 
     private DatabaseReference databaseReference;
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void submitBarcode() {
 
-        DatabaseReference databaseReference =
+        final DatabaseReference databaseReference =
             FirebaseDatabase.getInstance().getReference().child("Products");
 
                 if (scanContent != null) {
@@ -87,10 +87,19 @@ public class MainActivity extends AppCompatActivity {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (dataSnapshot.getValue() != null) {
                                 contentTxt.setText("Code: " + scanContent);
+                                quantContent = (String) dataSnapshot.child("Quantity").getValue();
+                                nameContent = (String) dataSnapshot.child("Name").getValue();
+
+                                quantityTxt.setText("Quantity " + quantContent);
+                                productTxt.setText("Name " + nameContent);
+
+
                             } else {
 
                                 Toast.makeText(getApplicationContext(), "No product found", Toast.LENGTH_LONG).show();
-
+                                contentTxt.setText("Code: Not Found");
+                                quantityTxt.setText("Quantity: Not Found");
+                                productTxt.setText("Name: Not Found");
                             }
                         }
 
