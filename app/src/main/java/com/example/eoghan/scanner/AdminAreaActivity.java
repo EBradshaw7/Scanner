@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +17,8 @@ import com.google.zxing.integration.android.IntentResult;
 
 public class AdminAreaActivity extends AppCompatActivity implements View.OnClickListener  {
 
-    private TextView quantityTxt, contentTxt, productTxt;
+    private TextView contentTxt;
+    private EditText quantityET, productET;
     private FirebaseAuth firebaseAuth;
     private Button buttonLogout, buttonSubmit;
     private DatabaseReference databaseReference;
@@ -34,9 +36,9 @@ public class AdminAreaActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_area);
 
-        quantityTxt = (TextView) findViewById(R.id.quant_text);
+        quantityET = (EditText) findViewById(R.id.quantET);
         contentTxt = (TextView) findViewById(R.id.scan_content);
-        productTxt = (TextView) findViewById(R.id.product_text);
+        productET = (EditText) findViewById(R.id.productET);
         buttonLogout = (Button) findViewById(R.id.logout);
         buttonSubmit = (Button) findViewById(R.id.submit);
 
@@ -52,7 +54,6 @@ public class AdminAreaActivity extends AppCompatActivity implements View.OnClick
             startActivity(new Intent(this, LoginActivity.class));
         }
 
-        databaseReference = FirebaseDatabase.getInstance().getReference();
 
 
         //FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -83,19 +84,12 @@ public class AdminAreaActivity extends AppCompatActivity implements View.OnClick
             // formatTxt.setText("FORMAT: " + scanFormat);
             contentTxt.setText("Code: " + scanContent);
 
-            submitBarcode();
+
 
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
         }
-    }
-
-    private void submitBarcode() {
-        //use this for add to database
-        databaseReference.child("Product").setValue(scanContent);
-
-
     }
 
     @Override
@@ -111,8 +105,18 @@ public class AdminAreaActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void submit() {
+        databaseReference.child("Products").child(scanContent);
+        databaseReference.child("Products").child(scanContent).child("Code").setValue(scanContent);
 
-        // Toast.makeText(this, scanContent + " has been added"  , Toast.LENGTH_LONG).show();
+
+
+        quantContent = quantityET.getText().toString();
+        nameContent = productET.getText().toString();
+
+        databaseReference.child("Products").child(scanContent).child("Name").setValue(nameContent);
+        databaseReference.child("Products").child(scanContent).child("Quantity").setValue(quantContent);
+
+        Toast.makeText(this, scanContent + " has been added"  , Toast.LENGTH_LONG).show();
 
     }
 }
