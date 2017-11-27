@@ -113,8 +113,14 @@ public class AdminAreaActivity extends AppCompatActivity implements View.OnClick
         quantContent = quantityET.getText().toString();
         nameContent = productET.getText().toString();
 
+
         databaseReference.child("Products").child(scanContent).child("Name").setValue(nameContent);
         databaseReference.child("Products").child(scanContent).child("Quantity").setValue(quantContent);
+
+
+
+
+
 
         Toast.makeText(this, scanContent + " has been added"  , Toast.LENGTH_LONG).show();
 

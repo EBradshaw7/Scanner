@@ -90,17 +90,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             if (dataSnapshot.getValue() != null) {
                                 contentTxt.setText("Code: " + scanContent);
 
+
+                                setValues();
+
                                 //printing location of value
                                 //DatabaseReference ref = databaseReference.child(scanContent);
                                 //quantContent = ref.child("Quantity").toString();
 
 
-                                nameContent = (String) dataSnapshot.child("Name").getValue();
+                               /* nameContent = (String) dataSnapshot.child("Name").getValue();
                                 quantContent = (String) dataSnapshot.child("Quantity").getValue();
 
 
                                 quantityTxt.setText("Quantity " + quantContent);
-                                productTxt.setText("Name " + nameContent);
+                                productTxt.setText("Name " + nameContent);*/
 
 
                             } else {
@@ -131,6 +134,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "Error, not stored: "  , Toast.LENGTH_LONG).show();
 
         }
+    }
+
+    private void setValues() {
+
+        //databaseReference.child("Products").child(scanContent).child("Name").setValue(nameContent);
+
+        nameContent = databaseReference.child("Products").child(scanContent).child("Name").toString();
+        quantContent = databaseReference.child("Products").child(scanContent).child("Quantity").toString();
+
+
+        quantityTxt.setText("Quantity " + quantContent);
+        productTxt.setText("Name " + nameContent);
+
+
+
+
     }
 
     @Override
