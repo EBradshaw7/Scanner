@@ -20,7 +20,7 @@ public class AdminAreaActivity extends AppCompatActivity implements View.OnClick
     private TextView contentTxt;
     private EditText quantityET, productET;
     private FirebaseAuth firebaseAuth;
-    private Button buttonLogout, buttonSubmit;
+    private Button buttonLogout, buttonSubmit, buttonBack;
     private DatabaseReference databaseReference;
     String scanContent, quantContent, nameContent;
     //String scanFormat;
@@ -41,7 +41,7 @@ public class AdminAreaActivity extends AppCompatActivity implements View.OnClick
         productET = (EditText) findViewById(R.id.productET);
         buttonLogout = (Button) findViewById(R.id.logout);
         buttonSubmit = (Button) findViewById(R.id.submit);
-
+        buttonBack = (Button) findViewById(R.id.backBtn);
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
@@ -101,6 +101,11 @@ public class AdminAreaActivity extends AppCompatActivity implements View.OnClick
         }
         if (v == buttonSubmit) {
             submit();
+        }
+        if (v == buttonBack){
+            finish();
+            startActivity(new Intent(this, MainActivity.class));
+
         }
     }
 
