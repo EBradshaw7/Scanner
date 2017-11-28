@@ -139,18 +139,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void setValues() {
 
         //databaseReference.child("Products").child(scanContent).child("Name").setValue(nameContent);
+/*
 
         nameContent = databaseReference.child("Products").child(scanContent).child("Name").toString();
         quantContent = databaseReference.child("Products").child(scanContent).child("Quantity").toString();
 
 
-        quantityTxt.setText("Quantity " + quantContent);
-        productTxt.setText("Name " + nameContent);
+
+                    FirebaseDatabase.getInstance().getReference().child("Products");
 
 
+*/
 
 
+        final DatabaseReference dbref1 =
+                FirebaseDatabase.getInstance().getReference().child("Products").child(scanContent);
+
+        ValueEventListener nameListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+            nameContent = (String) dataSnapshot.child("Name: ").getValue();
+            productTxt.setText("Name " + nameContent);
+
+            quantContent = (String) dataSnapshot.child("Quantity: ").getValue();
+            quantityTxt.setText("Quantity " + quantContent);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+        dbref1.addValueEventListener(nameListener);
     }
+
+
+
 
     @Override
     public void onClick(View v) {
